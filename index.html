@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>-Amad-</title>
+    <style>
+        /* Gaya video */
+        video {
+            width: 100%;
+            height: auto;
+            background-color: black;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Efek hover untuk interaktiviti */
+        video:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Gaya tajuk */
+        .stream-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+
+    <h2>tekan je gambar bulat crack tu</h2>
+    
+    <!-- Live Stream 1 -->
+    <div>
+        <h2 class="stream-title">TV3</h2>
+        <video id="video1" controls autoplay muted></video>
+    </div>
+    
+    <!-- Live Stream 2 -->
+    <div>
+        <h2 class="stream-title">TV9</h2>
+        <video id="video2" controls autoplay muted></video>
+    </div>
+
+    <script>
+        // Fungsi untuk memuatkan stream apabila butang play ditekan
+        function loadStream(videoId, streamUrl) {
+            const video = document.getElementById(videoId);
+
+            // Semak jika HLS disokong
+            if (Hls.isSupported()) {
+                const hls = new Hls();
+
+                // Muatkan dan sambungkan sumber stream
+                hls.loadSource(streamUrl);
+                hls.attachMedia(video);
+
+                // Mainkan video selepas manifest dimuatkan
+                hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                    console.log('Stream Loaded: ' + videoId);
+                    video.play();  // Mainkan video selepas dimuatkan
+                });
+
+                // Menangani kesalahan HLS.js
+                hls.on(Hls.Events.ERROR, function(event, data) {
+                    console.error("HLS Error: ", data);
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                // Untuk peranti yang menyokong format HLS secara asli
+                video.src = streamUrl;
+                video.play();  // Mainkan video selepas dimuatkan
+            }
+        }
+
+        // Muatkan stream untuk kedua-dua video
+        loadStream('video1', 'https://tonton-live-switch-ssar.akamaized.net/stream-tv3/master.m3u8?bpkio_serviceid=6c0958d82a830a02ca0936d9cfab8311');
+        loadStream('video2', 'https://tonton-live-switch-ssar.akamaized.net/stream-tv9/master.m3u8?bpkio_serviceid=6c0958d82a830a02ca0936d9cfab8311');
+    </script>
+
+</body>
+</html>
